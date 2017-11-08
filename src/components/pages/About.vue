@@ -3,11 +3,6 @@
     <sticky>
       <div class="container lobu-search">
         <div class="row justify-content-center">
-          <div class="col-12 col-md-2 sticky-logo">
-            <a href="">
-              <img src="../assets/lobu.jpg" alt="">
-            </a>
-          </div> 
           <div class="col-12 col-md-7 c_input-search">
             <vue-instant class="input-search" :suggestion-attribute="suggestionAttribute" v-model="search" :disabled="false" @input="changed" :show-autocomplete="false" :autofocus="false" :suggestions="suggestions" name="Lobu Search" placeholder="Busca el mejor precio..." type="custom" @click-button="getResult">
             </vue-instant>

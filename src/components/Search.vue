@@ -28,6 +28,13 @@
         </div>
       </div>
     </div>
+    <div class="container space" v-if="products.length && !pagination.hasEnd">
+      <div class="row justify-content-center">
+        <div class="col-8 text-center">
+          <button type="button" class="btn btn-primary" @click="loadNextPage" :class="{ 'is-loading': pagination.isLoading }" :disabled="pagination.isLoading">Cargar más productos</button>
+        </div>
+      </div>
+    </div>
     <div class="container" v-show="isInfo">
       <info></info>
     </div>
@@ -60,7 +67,13 @@ export default {
       isLoading: false,
       isInfo: true,
       showNotification: false,
-      isTotal: false
+      isTotal: false,
+      pagination: {
+        offset: 0,
+        limit: 21,
+        hasEnd: false,
+        isLoading: false
+      }
     }
   },
   computed: {
@@ -77,6 +90,11 @@ export default {
           this.isTotal = false
         }, 3000)
       }
+    },
+    search () {
+      this.pagination.offset = 0
+      this.pagination.hasEnd = false
+      this.pagination.isLoading = false
     }
   },
   methods: {
@@ -103,12 +121,17 @@ export default {
       this.isLoading = true
       this.isInfo = false
       var search = this.search
+      var offset = 0
+
       api.get('/api/products/', {
         params: {
-          search
+          search,
+          offset
         }
       }).then(response => {
         console.log(response.data)
+        this.pagination.offset += this.pagination.limit
+
         this.showNotification = response.data.count === 0
         this.total = response.data
         this.products = response.data.results
@@ -117,6 +140,24 @@ export default {
         this.isInfo = false
       }).catch(error => {
         console.log(error)
+      })
+    },
+    loadNextPage () {
+      this.pagination.isLoading = true
+      var search = this.search
+      var offset = this.pagination.offset
+      api.get('/api/products/', {
+        params: {
+          search,
+          offset
+        }
+      }).then(response => {
+        console.log(response.data)
+        this.pagination.offset += this.pagination.limit
+        this.pagination.hasEnd = response.data.next === null
+
+        this.products = [...this.products, ...response.data.results]
+        this.pagination.isLoading = false
       })
     }
   }

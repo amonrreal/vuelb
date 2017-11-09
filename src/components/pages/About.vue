@@ -3,8 +3,8 @@
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-12 col-md-7">
-          <form v-on:submit.prevent="getResult(products)">
-            <input type="text" class="form-control" placeholder="Busca algo..." v-model="products" @keyup.enter="search" />
+          <form v-on:submit.prevent="getResult">
+            <input type="text" class="form-control" placeholder="Busca algo..." v-model="search" @keyup.enter="search" />
           </form>
           <p id="total" v-show="isTotal">{{ searchMessage }}</p>
         </div>
@@ -40,9 +40,7 @@ export default {
   data () {
     return {
       search: '',
-      suggestionAttribute: 'title',
       products: [],
-      suggestions: [],
       total: [],
       isLoading: false,
       showNotification: false,
@@ -65,24 +63,6 @@ export default {
     }
   },
   methods: {
-    changed () {
-      var search = this.search
-      var that = this
-      this.suggestions = []
-
-      api.get('/api/products/', {
-        params: {
-          search
-        }
-      }).then(response => {
-        console.log(response.data)
-        response.data.results.forEach(function (a) {
-          that.suggestions.push(a)
-        })
-      }).catch(error => {
-        console.log(error)
-      })
-    },
     getResult () {
       if (!this.search) { return }
       this.isLoading = true

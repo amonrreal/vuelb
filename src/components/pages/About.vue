@@ -1,16 +1,14 @@
 <template>
   <section>
-    <sticky>
-      <div class="container lobu-search">
-        <div class="row justify-content-center">
-          <div class="col-12 col-md-7 c_input-search">
-            <vue-instant class="input-search" :suggestion-attribute="suggestionAttribute" v-model="search" :disabled="false" @input="changed" :show-autocomplete="false" :autofocus="false" :suggestions="suggestions" name="Lobu Search" placeholder="Busca el mejor precio..." type="custom" @click-button="getResult">
-            </vue-instant>
-            <p id="total" v-show="isTotal">{{ searchMessage }}</p>
-          </div>
+    <div class="container lobu-search">
+      <div class="row justify-content-center">
+        <div class="col-12 col-md-7 c_input-search">
+          <vue-instant class="input-search" :suggestion-attribute="suggestionAttribute" v-model="search" :disabled="false" @input="changed" :show-autocomplete="false" :autofocus="false" :suggestions="suggestions" name="Lobu Search"placeholder="Busca el mejor precio..." type="custom" @click-button="getResult">
+          </vue-instant>
+          <p id="total" v-show="isTotal">{{ searchMessage }}</p>
         </div>
       </div>
-    </sticky>
+    </div>
     <loader v-show="isLoading"></loader>
     <notification class="space" v-show="showNotification">
       <h3 slot="body">No encontramos este producto</h3>
@@ -30,15 +28,13 @@
 import product from '@/components/Product'
 import loader from '@/components/shared/Loader'
 import notification from '@/components/shared/Notification'
-import sticky from '@/components/shared/Sticky'
 import api from '@/services/api'
 
 export default {
   components: {
     product,
     loader,
-    notification,
-    sticky
+    notification
   },
   data () {
     return {
@@ -110,26 +106,6 @@ export default {
 </script>
 
 <style scoped>
-  .sticky-container>.container {
-    -webkit-box-shadow: 0px 4px 21px -2px rgba(99,99,99,0.69);
-    -moz-box-shadow: 0px 4px 21px -2px rgba(99,99,99,0.69);
-    box-shadow: 0px 4px 21px -2px rgba(99,99,99,0.69);
-  }
-  .sticky-container>.container>.row>.sticky-logo {
-    display: block;
-  }
-  .sticky-container>.lobu-search {
-    margin-top:0;
-    padding-top: 20px;
-  }
-  .sticky-logo {
-    display: none;
-  }
-  .sticky-logo img {
-    margin-top: -15px;
-    height: 75px;
-    width: auto;
-  }
   .lobu-search {
     margin-top: 20px;
     width: 100%;

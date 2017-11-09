@@ -1,8 +1,8 @@
 <template>
   <section>
-    <div class="container lobu-search">
+    <div class="container">
       <div class="row justify-content-center">
-        <div class="col-12 col-md-7 c_input-search">
+        <div class="col-12 col-md-7">
           <vue-instant class="input-search" :suggestion-attribute="suggestionAttribute" v-model="search" :disabled="false" @input="changed" :show-autocomplete="false" :autofocus="false" :suggestions="suggestions" name="Lobu Search"placeholder="Busca el mejor precio..." type="custom" @click-button="getResult">
           </vue-instant>
           <p id="total" v-show="isTotal">{{ searchMessage }}</p>

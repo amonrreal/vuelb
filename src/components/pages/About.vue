@@ -23,15 +23,11 @@
         </div>
       </div>
     </div>
-    <div class="container" v-show="isInfo">
-      <info></info>
-    </div>
   </section>
 </template>
 
 <script>
 import product from '@/components/Product'
-import info from '@/components/Info'
 import loader from '@/components/shared/Loader'
 import notification from '@/components/shared/Notification'
 import sticky from '@/components/shared/Sticky'
@@ -40,7 +36,6 @@ import api from '@/services/api'
 export default {
   components: {
     product,
-    info,
     loader,
     notification,
     sticky
@@ -53,7 +48,6 @@ export default {
       suggestions: [],
       total: [],
       isLoading: false,
-      isInfo: true,
       showNotification: false,
       isTotal: false
     }
@@ -68,7 +62,6 @@ export default {
       if (this.showNotification) {
         setTimeout(() => {
           this.showNotification = false
-          this.isInfo = true
           this.isTotal = false
         }, 3000)
       }
@@ -96,7 +89,6 @@ export default {
     getResult () {
       if (!this.search) { return }
       this.isLoading = true
-      this.isInfo = false
       var search = this.search
       api.get('/api/products/', {
         params: {
@@ -109,7 +101,6 @@ export default {
         this.products = response.data.results
         this.isLoading = false
         this.isTotal = true
-        this.isInfo = false
       }).catch(error => {
         console.log(error)
       })
